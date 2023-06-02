@@ -38,7 +38,7 @@ This is a full stack beer review application built using Spring Boot for the bac
 - **Java**: The main programming language used for building the backend of the application.
 - **Spring Boot**: Used for developing the RESTful APIs.
 - **Angular**: Used for frontend development.
-- **PostgreSQL**: Used as the database to store user, beer, and review data.
+- **PostgreSQL**: Used as the database to store user, beer, brewery, and review data.
 - **Maven or Gradle**: Used for managing project dependencies.
 - **JUnit**: A testing framework for Java applications, used to ensure our code works as expected.
 - **Spring Security**: A powerful and highly customizable authentication and access-control framework.
