@@ -17,6 +17,7 @@ public class Beer {
 
     private String abv;
 
+    @ManytoOne
     private String breweryId;
     
 }

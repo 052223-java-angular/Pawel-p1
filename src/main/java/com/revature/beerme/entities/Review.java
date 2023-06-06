@@ -6,6 +6,7 @@ import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -23,14 +24,17 @@ public class Review {
     @Column(name = "comment", nullable = false)
     private String comment;
 
-    @OneToMany(mappedBy = "user")
-    private Set<User> user;
-
+    //Each review is associated with one user
     @ManyToOne
-    private Set<Beer> beer;
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
+    private User user;
 
-    @OneToMany(mappedBy = "brewery")
-    private Set<Brewery> brewery;
+    //Each review is associated with one beer
+    @ManyToOne
+    @JoinColumn(name = "beer_id", nullable = false)
+    private Beer beerId;
+    
+    
     
     
 }
