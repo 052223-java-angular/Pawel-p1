@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,21 +23,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "breweries")
-public class Brewery {
-    
+@Table(name = "roles")
+public class Role {
+
     @Id
     private String id;
 
-    private String name;
+    @Column(name = "role_name", nullable = false)
+    private String roleName;
 
-    private String location;
-
-    private String averageRating;
-
-    @OneToMany(mappedBy = "brewery", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Set<Beer> beers;
+    private Set<User> users;
 
 
+
+
+
+    
 }
