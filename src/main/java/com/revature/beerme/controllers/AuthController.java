@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.services.UserService;
+import com.revature.beerme.utils.custom_exceptions.ResourceConflictException;
 
 
 
@@ -25,7 +26,8 @@ public class AuthController {
         public ResponseEntity<?> registerUser(@RequestBody NewUserRequest newUserRequest) {
             //validate user registration information via user service
             if(!userService.isValidUsername(newUserRequest.getUsername())) {
-                return ResponseEntity.status(400).body("Username is already taken");
+                throw new ResourceConflictException(
+                    "Username is must be 8-20 characters long and can only contain letters, numbers, periods and underscores");
             }
             
             
@@ -33,11 +35,11 @@ public class AuthController {
 
 
             // return response entity
-            return null;
+           
         }
 
 
 
-    @PostMapping("/login")
+    //@PostMapping("/login")
     
 }
