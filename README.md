@@ -4,7 +4,7 @@
 
 ## Introduction 
 
-This is a full stack beer review application built using Spring Boot for the backend and Angular for the frontend. The application will utilize a PostgreSQL database to store beer, review, and user information.
+Welcome to BeerMe, a full stack beer review application that seeks to facilitate beer discovery by compiling and sharing beer reviews from our ever-growing community of members. Built using Spring Boot for the backend, Angular for the frontend, a PostgreSQL database to store beer, review, and user information, BeerMe offers a robust solution to finding your next brew. Our knowledge base of breweries is powered by the free and open-source open brewery db.
 
 ## User Stories 
 
@@ -16,6 +16,8 @@ This is a full stack beer review application built using Spring Boot for the bac
 - **As a user,** I want to edit or delete my reviews so that I can make changes if my opinion changes. 
 - **As a user**, I want to view ratings and reviews from other users so that I can get different perspectives about a beer.
 - **As a user**, I want to mark my favorite beers so that I can easily find them later.
+- **As a user**, I want to follow other users and see their reviews as they are added.
+- **As a user**, I want to add profile pictures and biographical information to my profile.
 
 ## MVP (Minimum Viable Product)
 
@@ -25,13 +27,17 @@ This is a full stack beer review application built using Spring Boot for the bac
 - Edit or delete reviews 
 - Viewing ratings and reviews from other users 
 - Marking favorite beers
+- Implementing user profiles with profile pictures and bios
+- Adding a feature for users to follow other users and see their reviews
+- Adding an admin role that can add, remove, or modify beers 
 
 ## Stretch Goals 
 
 - Implementing a recommendation system based on user's beer preferences and past reviews 
-- Adding an admin role that can add, remove, or modify beers 
-- Implementing user profiles with avatars and bio 
-- Adding a feature for users to follow other users and see their reviews
+
+- Leverage a chat assistant to provide a natural language interface for beer discovery
+
+
 
 ## Tech Stacks 
 
