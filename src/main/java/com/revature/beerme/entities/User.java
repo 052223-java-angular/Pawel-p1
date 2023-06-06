@@ -4,12 +4,15 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,10 +38,11 @@ public class User {
     private String password;
 
     //One user can have many reviews
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<Review> reviews;
 
-    //Many userscan have one role
+    //Many users can have one role
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     @JsonBackReference
@@ -46,9 +50,4 @@ public class User {
 
 
 
-
-
-
-
-    
 }

@@ -3,6 +3,8 @@ package com.revature.beerme.entities;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -37,12 +39,14 @@ public class Review {
     //Each review is associated with one user
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
+    @JsonBackReference
     private User user;
 
     //Each review is associated with one beer
     @ManyToOne
-    @JoinColumn(name = "beer_id", nullable = false)
-    private Beer beerId;
+    @JoinColumn(name = "beer_id", nullable = false) 
+    @JsonBackReference
+    private Beer beer;
     
 
     
