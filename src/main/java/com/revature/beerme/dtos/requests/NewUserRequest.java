@@ -19,4 +19,5 @@ public class NewUserRequest {
     private String password;
     private String confirmedPassword;
     
+    
 }

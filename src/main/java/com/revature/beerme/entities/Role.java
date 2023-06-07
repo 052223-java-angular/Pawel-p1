@@ -1,6 +1,8 @@
 package com.revature.beerme.entities;
 
 import java.util.Set;
+import java.util.HashSet;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -30,15 +32,16 @@ public class Role {
     private String id;
 
     @Column(name = "role_name", nullable = false)
-    private String roleName;
+    private String name;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<User> users;
 
-
-
-
-
+    public Role(String name){
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.users = new HashSet<>();
+    }
     
 }

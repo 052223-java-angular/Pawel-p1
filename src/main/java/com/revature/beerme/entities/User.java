@@ -1,5 +1,6 @@
 package com.revature.beerme.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -48,6 +49,12 @@ public class User {
     @JsonBackReference
     private Role role;
 
-
+    public User(String username, String password, Role role){
+        this.id = java.util.UUID.randomUUID().toString();
+        this.username = username;
+        this.password = password;
+        this.reviews = new HashSet<>();
+        this.role = role;
+    }
 
 }
