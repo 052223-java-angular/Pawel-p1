@@ -1,5 +1,6 @@
 package com.revature.beerme.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,9 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.services.UserService;
 import com.revature.beerme.utils.custom_exceptions.ResourceConflictException;
+import lombok.AllArgsConstructor;
 
 
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -30,12 +32,14 @@ public class AuthController {
                     "Username is must be 8-20 characters long and can only contain letters, numbers, periods and underscores");
             }
             
-            
-            // call service method to register user
 
+
+            
+            // call user service method to register user
+            userService.registerUser(newUserRequest);
 
             // return response entity
-           
+           return ResponseEntity.status(HttpStatus.CREATED).build();
         }
 
 

@@ -6,6 +6,7 @@ import mindrot.jbcrypt.BCrypt;
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.entities.User;
 import com.revature.beerme.repositories.UserRepository;
+import com.revature.beerme.services.RoleService;
 
 
 
@@ -13,6 +14,9 @@ import com.revature.beerme.repositories.UserRepository;
 
 
 public class UserService {
+    private final UserRepository userRepository;
+    private final RoleService roleService;
+    
 
 
 
