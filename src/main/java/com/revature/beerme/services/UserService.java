@@ -49,7 +49,7 @@ public class UserService {
     }
     public boolean isValidPassword(String password) {
         // check if password is valid
-        return password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]");
+        return password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$");
     }
 
     public boolean isSamePassword(String password, String confirmedPassword) {
