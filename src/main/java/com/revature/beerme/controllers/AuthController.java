@@ -1,12 +1,19 @@
 package com.revature.beerme.controllers;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
+import com.revature.beerme.dtos.responses.Principal;
+import com.revature.beerme.entities.User;
+import com.revature.beerme.services.JwtTokenService;
 import com.revature.beerme.services.UserService;
 import com.revature.beerme.utils.custom_exceptions.ResourceConflictException;
 import lombok.AllArgsConstructor;
@@ -18,6 +25,7 @@ import lombok.AllArgsConstructor;
 public class AuthController {
 
     private final UserService userService;
+    private final JwtTokenService tokenService;
 
     
 
@@ -57,6 +65,29 @@ public class AuthController {
 
 
 
-    //@PostMapping("/login")
+        @PostMapping("/login")
+
+        public ResponseEntity<Principal> login(@RequestBody LoginRequest loginReq) {
+            //userservice to call login method
+
+            Principal principal = userService.login(loginReq);
+
+            //create jwt token
+
+            String token = tokenService.generateToken(principal);
+
+            principal.setToken(token);
+
+
+
+            // return status ok and return principal object
+
+            return ResponseEntity.status(HttpStatus.OK).body(principal);
+
+
+
+        }
+
+
     
 }
