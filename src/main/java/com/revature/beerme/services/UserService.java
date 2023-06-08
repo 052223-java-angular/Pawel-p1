@@ -2,21 +2,39 @@ package com.revature.beerme.services;
 
 import java.util.Optional;
 
-import mindrot.jbcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.stereotype.Service;
+
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.entities.User;
 import com.revature.beerme.repositories.UserRepository;
 import com.revature.beerme.services.RoleService;
+import com.revature.beerme.entities.Role;
+import com.revature.beerme.dtos.responses.Principal;
+import lombok.AllArgsConstructor;
 
 
 
-
-
-
+@Service
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     
+
+    public User registerUser(NewUserRequest newUserRequest){
+        //find role User
+        Role userRole = roleService.findByName("USER");
+
+        //hash password
+        String hashed = BCrypt.hashpw(newUserRequest.getPassword(), BCrypt.gensalt());
+
+        //create new user
+        User newUser = new User(newUserRequest.getUsername(), hashed, userRole);
+
+        //save new user and return to controller
+        return userRepository.save(newUser);
+    }
 
 
 
@@ -25,17 +43,18 @@ public class UserService {
         return username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
 
     }
-    public boolean isPasswordValid(String password) {
+    public boolean isUniqueUsername(String username) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        return userOpt.isEmpty();
+    }
+    public boolean isValidPassword(String password) {
         // check if password is valid
-        return password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]");
+        return password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$");
     }
 
-    public boolean isPasswordConfirmed(String password, String confirmedPassword) {
+    public boolean isSamePassword(String password, String confirmedPassword) {
         // check if password and confirmed password match
         return password.equals(confirmedPassword);
     }
 
-
-
-    
 }
