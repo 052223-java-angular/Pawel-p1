@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.beerme.entities.User;
 
-//for performing database operations on User Entity
+//for performing CRUD database operations on User Entity
 
 
 @Repository

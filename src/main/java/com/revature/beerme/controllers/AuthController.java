@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
+import com.revature.beerme.dtos.requests.ReviewRequest;
 import com.revature.beerme.dtos.responses.Principal;
+import com.revature.beerme.entities.Beer;
+import com.revature.beerme.entities.Review;
 import com.revature.beerme.entities.User;
+import com.revature.beerme.services.BeerService;
 import com.revature.beerme.services.JwtTokenService;
 import com.revature.beerme.services.UserService;
 import com.revature.beerme.utils.custom_exceptions.ResourceConflictException;
 import lombok.AllArgsConstructor;
-
+import com.revature.beerme.services.ReviewService;
 
 @AllArgsConstructor
 @RestController
@@ -26,6 +30,8 @@ public class AuthController {
 
     private final UserService userService;
     private final JwtTokenService tokenService;
+    private final BeerService beerService;
+    private final ReviewService reviewService;
 
     
 
@@ -84,9 +90,34 @@ public class AuthController {
 
             return ResponseEntity.status(HttpStatus.OK).body(principal);
 
-
-
         }
+
+        @PostMapping("/review")
+
+        public ResponseEntity<?> addReview(@RequestBody ReviewRequest req){
+
+            //get User object from db by username
+            User user = userService.findByUserName(req.getUsername());
+
+            //get beer object from db by beername
+
+            Beer beer = beerService.findByBeerName(req.getBeername());
+
+            //save review object to db
+
+            reviewService.createReview(req, user, beer);
+
+            //return response entity (201 created)
+
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+
+
+            
+        }
+
+//-----HelperMethods-----------------------------------------------------------------------------------------------------------------------------//
+
+
 
 
     

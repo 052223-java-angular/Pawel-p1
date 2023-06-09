@@ -72,9 +72,16 @@ public class UserService {
         }
 
             throw new UserNotFoundException("Invalid Credentials");
-        
+    
+    }
 
 
+    public User findByUserName(String username) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if(userOpt.isPresent()) {
+            return userOpt.get();
+        }
+        throw new UserNotFoundException("User not found");
     }
 
 }
