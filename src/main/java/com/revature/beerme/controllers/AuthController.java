@@ -1,9 +1,11 @@
 package com.revature.beerme.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.dtos.requests.ReviewRequest;
+import com.revature.beerme.dtos.responses.BeerReview;
 import com.revature.beerme.dtos.responses.Principal;
 import com.revature.beerme.entities.Beer;
 import com.revature.beerme.entities.Review;
@@ -113,6 +116,18 @@ public class AuthController {
 
 
             
+        }
+
+        @GetMapping("/reviews")
+        public ResponseEntity<List<BeerReview>> getReviews(){
+            
+            List<BeerReview> beerReviews = reviewService.getAllReviews();
+
+            if(!beerReviews.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(beerReviews);
+            }else{
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
         }
 
 //-----HelperMethods-----------------------------------------------------------------------------------------------------------------------------//

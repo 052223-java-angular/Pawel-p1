@@ -25,5 +25,13 @@ public class BeerService {
         }
         throw new UserNotFoundException("Beer not found");
     }
+
+    public Beer findByBeerId(String beerId) {
+        Optional<Beer> beerOpt = beerRepository.findById(beerId);
+        if(beerOpt.isPresent()) {
+            return beerOpt.get();
+        }
+        throw new UserNotFoundException("Beer not found");
+    }
     
 }

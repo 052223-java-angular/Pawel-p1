@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.revature.beerme.entities.Review;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Integer> {
+public interface ReviewRepository extends JpaRepository<Review, String> {
     
 }

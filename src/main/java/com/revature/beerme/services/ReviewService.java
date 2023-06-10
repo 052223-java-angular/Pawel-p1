@@ -1,10 +1,13 @@
 package com.revature.beerme.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import com.revature.beerme.dtos.requests.ReviewRequest;
+import com.revature.beerme.dtos.responses.BeerReview;
 import com.revature.beerme.entities.Beer;
 import com.revature.beerme.entities.Review;
 import com.revature.beerme.entities.User;
@@ -31,5 +34,23 @@ public class ReviewService {
         review.setUser(user);
         reviewRepository.save(review);
     }
+
+    public List<BeerReview> getAllReviews() {
+    List<Review> reviews = reviewRepository.findAll();
+    List<BeerReview> beerReviews = new ArrayList<>();
+
+    for(Review review : reviews) {
+        BeerReview beerReview = new BeerReview(review, review.getBeer());
+        beerReviews.add(beerReview);
+
+    }
+
+    return beerReviews;
+    }
+
+//----------Helper Methods-------///
+
+
+
 
 }
