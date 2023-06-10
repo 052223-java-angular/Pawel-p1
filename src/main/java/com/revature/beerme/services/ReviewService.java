@@ -2,6 +2,7 @@ package com.revature.beerme.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -44,9 +45,34 @@ public class ReviewService {
         beerReviews.add(beerReview);
 
     }
-
     return beerReviews;
     }
+
+    public List<BeerReview> getBeerReviewsByBeerName(String beername){
+
+        //initialize beerReview List
+        List<BeerReview> beerReviews = new ArrayList<>();
+
+        //retrieve beer object with matching beername
+        Beer beer = beerService.findByBeerName(beername);
+
+        //retrieve a list of reviews with matching beer_id from beer object
+
+        Set<Review> reviewSet = beer.getReviews();
+
+        for(Review review : reviewSet){
+
+            BeerReview beerReview = new BeerReview(review, beer);
+            beerReviews.add(beerReview);
+        }
+        
+        return beerReviews;
+
+
+
+    }
+
+   
 
 //----------Helper Methods-------///
 

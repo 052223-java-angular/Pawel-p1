@@ -41,7 +41,7 @@ public class Beer {
     @JsonBackReference
     private Brewery brewery;
 
-    @OneToMany(mappedBy = "beer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "beer", fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<Review> reviews;
 

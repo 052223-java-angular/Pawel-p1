@@ -19,7 +19,7 @@ public class BeerService {
 
 
      public Beer findByBeerName(String beername) {
-        Optional<Beer> beerOpt = beerRepository.findByName(beername);
+        Optional<Beer> beerOpt = beerRepository.findByNameIgnoreCase(beername);
         if(beerOpt.isPresent()) {
             return beerOpt.get();
         }
