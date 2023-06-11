@@ -19,7 +19,15 @@ public class BeerService {
 
 
      public Beer findByBeerName(String beername) {
-        Optional<Beer> beerOpt = beerRepository.findByName(beername);
+        Optional<Beer> beerOpt = beerRepository.findByNameIgnoreCase(beername);
+        if(beerOpt.isPresent()) {
+            return beerOpt.get();
+        }
+        throw new UserNotFoundException("Beer not found");
+    }
+
+    public Beer findByBeerId(String beerId) {
+        Optional<Beer> beerOpt = beerRepository.findById(beerId);
         if(beerOpt.isPresent()) {
             return beerOpt.get();
         }

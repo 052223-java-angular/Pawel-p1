@@ -13,7 +13,7 @@ import com.revature.beerme.entities.Beer;
 
 public interface BeerRepository extends JpaRepository<Beer, String>{
  
-    Optional<Beer> findByName(String name);
+    Optional<Beer> findByNameIgnoreCase(String name);
 
 
 
