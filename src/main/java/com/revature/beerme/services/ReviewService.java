@@ -2,10 +2,13 @@ package com.revature.beerme.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.UUID;
 
+import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.revature.beerme.dtos.requests.ReviewRequest;
 import com.revature.beerme.dtos.responses.BeerReview;
@@ -67,10 +70,29 @@ public class ReviewService {
         }
         
         return beerReviews;
-
-
-
     }
+
+     public Review updateReviewById(String id, ReviewRequest req){
+
+        Optional<Review> existingReview = reviewRepository.findById(id);
+
+        if(existingReview.isPresent()){
+
+            Review review = existingReview.get();
+
+            review.setComment(req.getComment());
+            review.setRating(req.getComment());
+
+            reviewRepository.save(review);
+
+            return review;
+
+
+        }
+
+        throw new NoSuchElementException("Review with id " + id + " not found.");
+
+     }
 
    
 

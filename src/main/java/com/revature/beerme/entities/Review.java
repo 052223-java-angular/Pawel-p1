@@ -28,6 +28,7 @@ import lombok.Setter;
 public class Review {
 
     @Id
+    @Column(name = "id", nullable = false)
     private String id;
 
     @Column(name = "rating", nullable = false)

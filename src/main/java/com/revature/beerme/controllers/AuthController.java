@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beerme.dtos.requests.LoginRequest;
@@ -93,7 +95,7 @@ public class AuthController {
             // return status ok and return principal object
 
             return ResponseEntity.status(HttpStatus.OK).body(principal);
-
+ 
         }
 
         @PostMapping("/review")
@@ -144,8 +146,23 @@ public class AuthController {
             }
 
             }
+    
+        @PutMapping("/reviews/{id}")
+
+        public ResponseEntity<Review> updateReview(@PathVariable String id, @RequestBody ReviewRequest req){
+
+            //retrieve review object corresponding to the id sent to endpoint
+            Review review = reviewService.updateReviewById(id, req);
+
+            return new ResponseEntity<>(review, HttpStatus.OK);
+
+
+        }
         
+
     }
+
+
 
 //-----HelperMethods-----------------------------------------------------------------------------------------------------------------------------//
 
