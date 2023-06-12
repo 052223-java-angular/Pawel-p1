@@ -1,5 +1,6 @@
 package com.revature.beerme.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -33,5 +34,12 @@ public class BeerService {
         }
         throw new UserNotFoundException("Beer not found");
     }
+
+    public List<Beer> searchBeersByName(String name) {
+        return beerRepository.findByNameContainingIgnoreCase(name);
+    }
+
+
+
     
 }

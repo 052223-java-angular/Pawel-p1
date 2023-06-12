@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -158,9 +159,23 @@ public class AuthController {
 
 
         }
-        
 
+        @GetMapping("/search")
+        public ResponseEntity<List<Beer>> searchBeer(@RequestParam("name") String name){
+        // Get list of beers that match search criteria from beerService
+        List<Beer> beers = beerService.searchBeersByName(name);
+        
+        // Check if we found any beers
+        if (!beers.isEmpty()) {
+            // If beers found, return the beers with status 200 OK
+            return ResponseEntity.status(HttpStatus.OK).body(beers);
+        } else {
+            // If no beers found, return status 404 NOT FOUND
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
+}
+
 
 
 
