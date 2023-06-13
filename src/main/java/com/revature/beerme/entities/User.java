@@ -49,6 +49,10 @@ public class User {
     @JsonBackReference
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Favorite> favorites;
+
     public User(String username, String password, Role role){
         this.id = java.util.UUID.randomUUID().toString();
         this.username = username;
