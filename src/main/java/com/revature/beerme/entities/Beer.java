@@ -45,5 +45,10 @@ public class Beer {
     @JsonManagedReference
     private Set<Review> reviews;
 
+    @OneToMany(mappedBy = "beer")
+    @JsonManagedReference
+    private Set<Favorite> favorites;
+
+
     
 }

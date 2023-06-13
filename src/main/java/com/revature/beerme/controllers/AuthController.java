@@ -15,20 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beerme.dtos.requests.FavoriteRequest;
 import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.dtos.requests.ReviewRequest;
 import com.revature.beerme.dtos.responses.BeerReview;
 import com.revature.beerme.dtos.responses.Principal;
 import com.revature.beerme.entities.Beer;
+import com.revature.beerme.entities.Favorite;
 import com.revature.beerme.entities.Review;
 import com.revature.beerme.entities.User;
 import com.revature.beerme.services.BeerService;
+import com.revature.beerme.services.FavoriteService;
 import com.revature.beerme.services.JwtTokenService;
 import com.revature.beerme.services.UserService;
 import com.revature.beerme.utils.custom_exceptions.ResourceConflictException;
 import lombok.AllArgsConstructor;
 import com.revature.beerme.services.ReviewService;
+import com.revature.beerme.services.FavoriteService;
 
 @AllArgsConstructor
 @RestController
@@ -39,6 +43,7 @@ public class AuthController {
     private final JwtTokenService tokenService;
     private final BeerService beerService;
     private final ReviewService reviewService;
+    private final FavoriteService favoriteService;
 
     
 
@@ -174,6 +179,23 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+
+
+        @PostMapping("/favorite")
+        public ResponseEntity<?> addFave(@RequestBody FavoriteRequest freq){
+
+            Beer beer = beerService.findByBeerName(freq.getBeername());
+
+            User user = userService.findByUserName(freq.getUsername());
+
+            favoriteService.createFavorite(user, beer);
+
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+
+
+
+        }
 }
 
 
