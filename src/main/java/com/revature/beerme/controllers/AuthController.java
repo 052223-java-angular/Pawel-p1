@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.beerme.dtos.requests.FavoriteRequest;
 import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
+import com.revature.beerme.dtos.requests.PBRequest;
 import com.revature.beerme.dtos.requests.ReviewRequest;
 import com.revature.beerme.dtos.responses.BeerReview;
 import com.revature.beerme.dtos.responses.Principal;
@@ -150,7 +151,6 @@ public class AuthController {
                 } else {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
-
             }
     
         @PutMapping("/reviews/{id}")
@@ -161,10 +161,7 @@ public class AuthController {
             Review review = reviewService.updateReviewById(id, req);
 
             return new ResponseEntity<>(review, HttpStatus.OK);
-
-
         }
-
         @GetMapping("/search")
         public ResponseEntity<List<Beer>> searchBeer(@RequestParam("name") String name){
         // Get list of beers that match search criteria from beerService
@@ -179,9 +176,6 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
-
-
         @PostMapping("/favorite")
         public ResponseEntity<?> addFave(@RequestBody FavoriteRequest freq){
 
@@ -192,11 +186,21 @@ public class AuthController {
             favoriteService.createFavorite(user, beer);
 
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
 
+        @PostMapping("/profile/{id}")
+
+            public ResponseEntity<User> addProfile(@PathVariable String id, @RequestBody PBRequest pbreq){
+
+                User newUser = userService.findByUserId(id, pbreq);
+
+                return ResponseEntity.status(HttpStatus.OK).body(newUser);
+
+            }
 
 
         }
-}
+    
 
 
 

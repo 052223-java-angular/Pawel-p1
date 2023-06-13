@@ -53,12 +53,27 @@ public class User {
     @JsonManagedReference
     private Set<Favorite> favorites;
 
+    private String prp;
+
+    private String bio;
+
     public User(String username, String password, Role role){
         this.id = java.util.UUID.randomUUID().toString();
         this.username = username;
         this.password = password;
         this.reviews = new HashSet<>();
         this.role = role;
+        
+    }
+     public User(String id, String username, String password, Role role, String prp, String bio ){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.reviews = new HashSet<>();
+        this.role = role;
+        this.prp = prp;
+        this.bio = bio;
+        
     }
 
 }
