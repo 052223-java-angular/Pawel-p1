@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
+import com.revature.beerme.dtos.requests.PBRequest;
 import com.revature.beerme.entities.User;
 import com.revature.beerme.repositories.UserRepository;
 import com.revature.beerme.services.RoleService;
@@ -82,6 +83,30 @@ public class UserService {
             return userOpt.get();
         }
         throw new UserNotFoundException("User not found");
+    }
+
+    public User findByUserId(String id, PBRequest pbreq){
+
+        
+
+        Optional<User> userOpt = userRepository.findById(id);
+        if(userOpt.isPresent()) {
+
+            User newUser = new User(userOpt.get().getId(), userOpt.get().getPassword(),
+             userOpt.get().getUsername(), userOpt.get().getRole(), pbreq.getPrp(), pbreq.getBio());
+
+            userRepository.save(newUser);
+
+            return newUser;
+        }
+        throw new UserNotFoundException("User not found");
+
+       
+
+
+
+
+
     }
 
 }

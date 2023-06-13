@@ -65,5 +65,15 @@ public class User {
         this.role = role;
         
     }
+     public User(String id, String username, String password, Role role, String prp, String bio ){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.reviews = new HashSet<>();
+        this.role = role;
+        this.prp = prp;
+        this.bio = bio;
+        
+    }
 
 }
