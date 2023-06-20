@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,8 @@ import lombok.AllArgsConstructor;
 import com.revature.beerme.services.ReviewService;
 import com.revature.beerme.services.FavoriteService;
 
+
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -197,6 +200,18 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.OK).body(newUser);
 
             }
+
+        // @PutMapping("/profile/{id}")
+
+        // public ResponseEntity<User> updateProfile(@PathVariable String id, @RequestBody PBRequest pbreq){
+
+
+        //         User updateUser = userService.findByUserId(id, pbreq);
+
+                
+
+        // }
+            
 
 
         }
