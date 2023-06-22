@@ -215,6 +215,20 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 }
+        @GetMapping("/beers/{id}")
+            public ResponseEntity<Beer> getBeerById(@PathVariable("id") String id){
+            //call the method to get a beer by ID from beerService
+            Optional<Beer> beer = beerService.getBeerById(id);
+            
+            //cverify that beer is found
+            if (beer.isPresent()) {
+                // if beer is found, return the beer with status 200 OK
+                return ResponseEntity.status(HttpStatus.OK).body(beer.get());
+            } else {
+                //if no beer is found, return status 404 NOT FOUND
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+}
 
 
         // @PutMapping("/profile/{id}")
@@ -227,8 +241,7 @@ public class AuthController {
                 
 
         // }
-            
-
+        
 
         }
     
