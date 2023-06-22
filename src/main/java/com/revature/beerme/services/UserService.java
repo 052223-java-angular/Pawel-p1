@@ -27,6 +27,10 @@ public class UserService {
     
 
     public User registerUser(NewUserRequest newUserRequest){
+
+        if (!isUniqueUsername(newUserRequest.getUsername())) {
+        throw new RuntimeException("Username already exists"); // You can create a custom exception for this if you want
+    }
         //find role User
         Role userRole = roleService.findByName("USER");
 

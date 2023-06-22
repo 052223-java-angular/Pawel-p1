@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,8 @@ import lombok.AllArgsConstructor;
 import com.revature.beerme.services.ReviewService;
 import com.revature.beerme.services.FavoriteService;
 
+
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -197,6 +200,34 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.OK).body(newUser);
 
             }
+
+    @GetMapping("/beers")
+        public ResponseEntity<List<Beer>> getAllBeers(){
+        //get list of beers from beerService
+        List<Beer> beers = beerService.getAllBeers();
+        
+        //check if beers found
+        if (!beers.isEmpty()) {
+            // if beers found, return the beers with status 200 OK
+            return ResponseEntity.status(HttpStatus.OK).body(beers);
+        } else {
+            //if no beers found, return status 404 NOT FOUND
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+}
+
+
+        // @PutMapping("/profile/{id}")
+
+        // public ResponseEntity<User> updateProfile(@PathVariable String id, @RequestBody PBRequest pbreq){
+
+
+        //         User updateUser = userService.findByUserId(id, pbreq);
+
+                
+
+        // }
+            
 
 
         }

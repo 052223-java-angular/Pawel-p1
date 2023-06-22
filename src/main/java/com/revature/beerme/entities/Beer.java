@@ -42,11 +42,11 @@ public class Beer {
     private Brewery brewery;
 
     @OneToMany(mappedBy = "beer", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference(value="beer-review")
     private Set<Review> reviews;
 
-    @OneToMany(mappedBy = "beer")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "beer", fetch = FetchType.EAGER)
+    @JsonManagedReference(value="beer-favorite")
     private Set<Favorite> favorites;
 
 

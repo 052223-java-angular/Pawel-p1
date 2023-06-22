@@ -39,7 +39,7 @@ public class User {
     private String password;
 
     //One user can have many reviews
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<Review> reviews;
 
@@ -49,8 +49,8 @@ public class User {
     @JsonBackReference
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonManagedReference(value = "user-favorite")
     private Set<Favorite> favorites;
 
     private String prp;
