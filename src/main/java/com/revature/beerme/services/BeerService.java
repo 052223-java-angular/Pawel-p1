@@ -41,5 +41,10 @@ public class BeerService {
     public List<Beer> getAllBeers() {
         return beerRepository.findAll();
 }
+    public Optional<Beer> getBeerById(String id){
+    //fetch beer from database using id
+    return beerRepository.findById(id);
+}
+
  
 }
