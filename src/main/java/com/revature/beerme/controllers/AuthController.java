@@ -201,6 +201,22 @@ public class AuthController {
 
             }
 
+    @GetMapping("/beers")
+        public ResponseEntity<List<Beer>> getAllBeers(){
+        //get list of beers from beerService
+        List<Beer> beers = beerService.getAllBeers();
+        
+        //check if beers found
+        if (!beers.isEmpty()) {
+            // if beers found, return the beers with status 200 OK
+            return ResponseEntity.status(HttpStatus.OK).body(beers);
+        } else {
+            //if no beers found, return status 404 NOT FOUND
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+}
+
+
         // @PutMapping("/profile/{id}")
 
         // public ResponseEntity<User> updateProfile(@PathVariable String id, @RequestBody PBRequest pbreq){

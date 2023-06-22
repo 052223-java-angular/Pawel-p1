@@ -38,8 +38,8 @@ public class BeerService {
     public List<Beer> searchBeersByName(String name) {
         return beerRepository.findByNameContainingIgnoreCase(name);
     }
-
-
-
-    
+    public List<Beer> getAllBeers() {
+        return beerRepository.findAll();
+}
+ 
 }

@@ -1,5 +1,7 @@
 package com.revature.beerme.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -25,10 +27,12 @@ public class Favorite {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference(value="user-favorite")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "beer_id", nullable = false)
+    @JsonBackReference(value="beer-favorite")
     private Beer beer;
 
     

@@ -46,10 +46,8 @@ public class Review {
     //Each review is associated with one beer
     @ManyToOne
     @JoinColumn(name = "beer_id", nullable = false) 
-    @JsonBackReference
+    @JsonBackReference(value="beer-review")
     private Beer beer;
-    
-
-    
+     
     
 }
