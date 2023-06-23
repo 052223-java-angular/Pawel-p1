@@ -89,28 +89,25 @@ public class UserService {
         throw new UserNotFoundException("User not found");
     }
 
-    public User findByUserId(String id, PBRequest pbreq){
+   public User updateUser(String id, PBRequest pbreq){
+    Optional<User> userOpt = userRepository.findById(id);
+    if(userOpt.isPresent()) {
+        User newUser = new User(userOpt.get().getId(), userOpt.get().getPassword(),
+        userOpt.get().getUsername(), userOpt.get().getRole(), pbreq.getPrp(), pbreq.getBio());
 
-        
+        userRepository.save(newUser);
 
-        Optional<User> userOpt = userRepository.findById(id);
-        if(userOpt.isPresent()) {
-
-            User newUser = new User(userOpt.get().getId(), userOpt.get().getPassword(),
-             userOpt.get().getUsername(), userOpt.get().getRole(), pbreq.getPrp(), pbreq.getBio());
-
-            userRepository.save(newUser);
-
-            return newUser;
-        }
-        throw new UserNotFoundException("User not found");
-
-       
-
-
-
-
-
+        return newUser;
     }
+    throw new UserNotFoundException("User not found");
+}
+
+public User findByUserId(String id){
+    Optional<User> userOpt = userRepository.findById(id);
+    if(userOpt.isPresent()) {
+        return userOpt.get();
+    }
+    throw new UserNotFoundException("User not found");
+}
 
 }

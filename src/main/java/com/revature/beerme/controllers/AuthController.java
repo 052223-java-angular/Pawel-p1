@@ -195,11 +195,25 @@ public class AuthController {
 
             public ResponseEntity<User> addProfile(@PathVariable String id, @RequestBody PBRequest pbreq){
 
-                User newUser = userService.findByUserId(id, pbreq);
+                User newUser = userService.updateUser(id, pbreq);
 
                 return ResponseEntity.status(HttpStatus.OK).body(newUser);
 
             }
+        
+    @GetMapping("/profile/{id}")
+        public ResponseEntity<User> getProfile(@PathVariable String id) {
+        User user = userService.findByUserId(id);
+        
+        // If user found, return the user with status 200 OK
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } 
+        // If user not found, return status 404 NOT FOUND
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+}
 
     @GetMapping("/beers")
         public ResponseEntity<List<Beer>> getAllBeers(){
