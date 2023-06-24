@@ -21,6 +21,7 @@ import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.dtos.requests.PBRequest;
 import com.revature.beerme.dtos.requests.ReviewRequest;
+import com.revature.beerme.dtos.requests.UpdateProfileRequest;
 import com.revature.beerme.dtos.responses.BeerReview;
 import com.revature.beerme.dtos.responses.Principal;
 import com.revature.beerme.entities.Beer;
@@ -191,25 +192,26 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
 
-        @PostMapping("/profile/{id}")
+        // @PostMapping("/profile/{id}")
 
-            public ResponseEntity<User> addProfile(@PathVariable String id, @RequestBody PBRequest pbreq){
+        //     public ResponseEntity<User> addProfile(@PathVariable String id, @RequestBody PBRequest pbreq){
 
-                User newUser = userService.updateUser(id, pbreq);
+        //         User newUser = userService.updateUser(id, pbreq);
 
-                return ResponseEntity.status(HttpStatus.OK).body(newUser);
+        //         return ResponseEntity.status(HttpStatus.OK).body(newUser);
 
-            }
-        
-    @GetMapping("/profile/{id}")
-        public ResponseEntity<User> getProfile(@PathVariable String id) {
-        User user = userService.findByUserId(id);
-        
-        // If user found, return the user with status 200 OK
+        //     }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/profile/{username}")
+        public ResponseEntity<User> getProfile(@PathVariable String username) {
+        User user = userService.findByUserName(username);
+
+        // when user found, return the user with status 200 OK
         if (user != null) {
             return ResponseEntity.status(HttpStatus.OK).body(user);
         } 
-        // If user not found, return status 404 NOT FOUND
+        // when user not found, return status 404 NOT FOUND
         else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -229,6 +231,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 }
+
         @GetMapping("/beers/{id}")
             public ResponseEntity<Beer> getBeerById(@PathVariable("id") String id){
             //call the method to get a beer by ID from beerService
@@ -245,19 +248,23 @@ public class AuthController {
 }
 
 
-        // @PutMapping("/profile/{id}")
-
-        // public ResponseEntity<User> updateProfile(@PathVariable String id, @RequestBody PBRequest pbreq){
-
-
-        //         User updateUser = userService.findByUserId(id, pbreq);
-
-                
-
-        // }
-        
-
+        @PutMapping("/profile/{username}/update")
+            public ResponseEntity<User> updateProfile(@PathVariable String username, @RequestBody UpdateProfileRequest updateProfileRequest) {
+            User updatedUser = userService.updateUserProfile(username, updateProfileRequest);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
         }
+        @GetMapping("/{username}/beers")
+            public ResponseEntity<List<Beer>> getUserBeers(@PathVariable String username){
+            List<Beer> beers = beerService.getUserReviewedBeers(username);
+            if (!beers.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK).body(beers);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        }
+
+    }
+
     
 
 

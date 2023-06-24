@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.revature.beerme.dtos.requests.LoginRequest;
 import com.revature.beerme.dtos.requests.NewUserRequest;
 import com.revature.beerme.dtos.requests.PBRequest;
+import com.revature.beerme.dtos.requests.UpdateProfileRequest;
 import com.revature.beerme.entities.User;
 import com.revature.beerme.repositories.UserRepository;
 import com.revature.beerme.services.RoleService;
@@ -16,6 +17,8 @@ import com.revature.beerme.utils.custom_exceptions.UserNotFoundException;
 import com.revature.beerme.entities.Role;
 import com.revature.beerme.dtos.responses.Principal;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -24,6 +27,9 @@ import lombok.AllArgsConstructor;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     
 
     public User registerUser(NewUserRequest newUserRequest){
@@ -82,22 +88,24 @@ public class UserService {
 
 
     public User findByUserName(String username) {
+        logger.info("Finding user by username: " + username);
         Optional<User> userOpt = userRepository.findByUsername(username);
         if(userOpt.isPresent()) {
+            logger.info("User found: " + userOpt.get());
             return userOpt.get();
         }
+        logger.warn("User not found");
         throw new UserNotFoundException("User not found");
     }
 
-   public User updateUser(String id, PBRequest pbreq){
+   public User updateUser(String id, PBRequest pbreq) {
     Optional<User> userOpt = userRepository.findById(id);
     if(userOpt.isPresent()) {
-        User newUser = new User(userOpt.get().getId(), userOpt.get().getPassword(),
-        userOpt.get().getUsername(), userOpt.get().getRole(), pbreq.getPrp(), pbreq.getBio());
-
-        userRepository.save(newUser);
-
-        return newUser;
+        User user = userOpt.get();
+        user.setPrp(pbreq.getPrp());
+        user.setBio(pbreq.getBio());
+        userRepository.save(user);
+        return user;
     }
     throw new UserNotFoundException("User not found");
 }
@@ -109,5 +117,16 @@ public User findByUserId(String id){
     }
     throw new UserNotFoundException("User not found");
 }
+  public User updateUserProfile(String username, UpdateProfileRequest updateProfileRequest) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if(userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setPrp(updateProfileRequest.getPrp());
+            user.setBio(updateProfileRequest.getBio());
+            userRepository.save(user);
+            return user;
+        }
+        throw new UserNotFoundException("User not found");
+    }
 
 }
