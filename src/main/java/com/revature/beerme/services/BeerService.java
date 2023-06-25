@@ -61,6 +61,8 @@ public class BeerService {
             throw new UserNotFoundException("User not found");
         }
     }
-
+     public Beer createBeer(Beer beer) {
+        return beerRepository.save(beer);
+    }
  
 }

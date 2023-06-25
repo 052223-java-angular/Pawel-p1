@@ -247,7 +247,11 @@ public class AuthController {
             }
 }
 
-
+        @PostMapping("/beers")
+            public ResponseEntity<Beer> addBeer(@RequestBody Beer beer) {
+            Beer createdBeer = beerService.createBeer(beer);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdBeer);
+}
         @PutMapping("/profile/{username}/update")
             public ResponseEntity<User> updateProfile(@PathVariable String username, @RequestBody UpdateProfileRequest updateProfileRequest) {
             User updatedUser = userService.updateUserProfile(username, updateProfileRequest);
