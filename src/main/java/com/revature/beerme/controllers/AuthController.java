@@ -202,7 +202,6 @@ public class AuthController {
 
         //     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/profile/{username}")
         public ResponseEntity<User> getProfile(@PathVariable String username) {
         User user = userService.findByUserName(username);
@@ -264,10 +263,22 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.OK).body(beers);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }}
+        
+        @GetMapping("/{username}/reviews")
+            public ResponseEntity<List<BeerReview>> getUserReviews(@PathVariable String username){
+            List<BeerReview> beerreviews = reviewService.getUserReviews(username);
+            if (!beerreviews.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK).body(beerreviews);
+            } else {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                    }
             }
-        }
 
-    }
+        }
+       
+
+    
 
     
 

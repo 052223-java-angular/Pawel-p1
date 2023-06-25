@@ -16,5 +16,12 @@ public interface ReviewRepository extends JpaRepository<Review, String> {
 
      List<Review> findByUser(User user);
 
-
+    List<Review> findByUser_Username(String username);
 }
+
+
+
+
+
+
+

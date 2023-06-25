@@ -94,6 +94,21 @@ public class ReviewService {
 
      }
 
+     public List<BeerReview> getUserReviews(String username) {
+    // retrieve the reviews of a specific user from the repository
+    List<Review> reviews = reviewRepository.findByUser_Username(username);
+    
+    // Convert the reviews to DTOs
+    List<BeerReview> beerReviews = new ArrayList<>();
+    for (Review review : reviews) {
+        beerReviews.add(new BeerReview(review, review.getBeer()));
+    }
+
+    // Return the DTOs
+    return beerReviews;
+}
+
+
    
 
 //----------Helper Methods-------///
