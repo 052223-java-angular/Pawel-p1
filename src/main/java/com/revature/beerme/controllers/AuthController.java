@@ -274,6 +274,18 @@ public class AuthController {
              return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
                     }
             }
+        @GetMapping("/{username}/favorites")
+            public ResponseEntity<List<Favorite>> getUserFavorites(@PathVariable String username) {
+            User user = userService.findByUserName(username);
+            List<Favorite> favorites = favoriteService.getFavoritesByUser(user);
+
+            if (!favorites.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK).body(favorites);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+}
+
 
         }
        

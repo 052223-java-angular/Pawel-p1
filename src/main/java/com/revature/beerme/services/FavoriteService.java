@@ -34,9 +34,7 @@ public class FavoriteService {
             faveRepo.save(fave);
         }
 
-
-
-
-
-    
+    public List<Favorite> getFavoritesByUser(User user) {
+        return faveRepo.findByUser(user);
+}
 }
